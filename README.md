@@ -16,7 +16,7 @@ features:
 heroImage: /logo.jpg
 heroImageStyle:
   {
-    maxWidth: "250px",
+    width: "250px",
     height:"200px",
     width: "100%",
     display: block,
