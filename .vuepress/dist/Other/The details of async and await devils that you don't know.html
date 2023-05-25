@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>The details of async and await devils that you don&#39;t know | XXXWeii</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/logo.jpg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon-152x152.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3eaf7c">
+    <meta name="description" content="XXXWeii&#39;s blog">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/icons/msapplication-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.ae7eb767.css" as="style"><link rel="preload" href="/assets/js/app.e7055c1c.js" as="script"><link rel="preload" href="/assets/js/3.23e16304.js" as="script"><link rel="preload" href="/assets/js/1.f8e854d9.js" as="script"><link rel="preload" href="/assets/js/87.f0bd99a2.js" as="script"><link rel="preload" href="/assets/js/28.d80ff939.js" as="script"><link rel="prefetch" href="/assets/js/10.8d0bae03.js"><link rel="prefetch" href="/assets/js/100.641bbe69.js"><link rel="prefetch" href="/assets/js/101.738d0c9c.js"><link rel="prefetch" href="/assets/js/102.09c47542.js"><link rel="prefetch" href="/assets/js/103.fd9c926b.js"><link rel="prefetch" href="/assets/js/104.1c14840a.js"><link rel="prefetch" href="/assets/js/105.87952114.js"><link rel="prefetch" href="/assets/js/106.2987dfb5.js"><link rel="prefetch" href="/assets/js/107.c3b64981.js"><link rel="prefetch" href="/assets/js/108.62831d4c.js"><link rel="prefetch" href="/assets/js/109.5853e733.js"><link rel="prefetch" href="/assets/js/11.f04d8888.js"><link rel="prefetch" href="/assets/js/110.b6943564.js"><link rel="prefetch" href="/assets/js/111.92b4092e.js"><link rel="prefetch" href="/assets/js/112.284920b1.js"><link rel="prefetch" href="/assets/js/113.b35f3db3.js"><link rel="prefetch" href="/assets/js/114.e8452cb0.js"><link rel="prefetch" href="/assets/js/115.c1e793de.js"><link rel="prefetch" href="/assets/js/116.46b84bf8.js"><link rel="prefetch" href="/assets/js/117.8f278f7b.js"><link rel="prefetch" href="/assets/js/118.f4a163a4.js"><link rel="prefetch" href="/assets/js/119.14e28f8e.js"><link rel="prefetch" href="/assets/js/12.5574e21a.js"><link rel="prefetch" href="/assets/js/120.81915684.js"><link rel="prefetch" href="/assets/js/121.a0a7fd51.js"><link rel="prefetch" href="/assets/js/122.dff85181.js"><link rel="prefetch" href="/assets/js/123.cf7a8dff.js"><link rel="prefetch" href="/assets/js/124.0beb86a6.js"><link rel="prefetch" href="/assets/js/125.837e9b64.js"><link rel="prefetch" href="/assets/js/126.601f5466.js"><link rel="prefetch" href="/assets/js/127.acade5af.js"><link rel="prefetch" href="/assets/js/128.2b16fef8.js"><link rel="prefetch" href="/assets/js/129.e58767d9.js"><link rel="prefetch" href="/assets/js/13.7ae64cb5.js"><link rel="prefetch" href="/assets/js/130.88b4d627.js"><link rel="prefetch" href="/assets/js/131.75315488.js"><link rel="prefetch" href="/assets/js/132.d04a8458.js"><link rel="prefetch" href="/assets/js/133.019af04d.js"><link rel="prefetch" href="/assets/js/14.1c72689f.js"><link rel="prefetch" href="/assets/js/15.5c2a2421.js"><link rel="prefetch" href="/assets/js/16.97980c8b.js"><link rel="prefetch" href="/assets/js/17.4bba9a62.js"><link rel="prefetch" href="/assets/js/18.fce5b82b.js"><link rel="prefetch" href="/assets/js/19.a06d53f2.js"><link rel="prefetch" href="/assets/js/20.72671ea6.js"><link rel="prefetch" href="/assets/js/21.c9577a2a.js"><link rel="prefetch" href="/assets/js/22.411c93fc.js"><link rel="prefetch" href="/assets/js/23.3df89477.js"><link rel="prefetch" href="/assets/js/24.68c6b216.js"><link rel="prefetch" href="/assets/js/25.8850a7c5.js"><link rel="prefetch" href="/assets/js/26.d7571b0c.js"><link rel="prefetch" href="/assets/js/27.03662f82.js"><link rel="prefetch" href="/assets/js/29.f2ee95e5.js"><link rel="prefetch" href="/assets/js/30.b158307f.js"><link rel="prefetch" href="/assets/js/31.7325ed1c.js"><link rel="prefetch" href="/assets/js/32.eceebac9.js"><link rel="prefetch" href="/assets/js/33.8e49089a.js"><link rel="prefetch" href="/assets/js/34.f503db79.js"><link rel="prefetch" href="/assets/js/35.367f73f9.js"><link rel="prefetch" href="/assets/js/36.f635da2a.js"><link rel="prefetch" href="/assets/js/37.9917f574.js"><link rel="prefetch" href="/assets/js/38.a8f864cd.js"><link rel="prefetch" href="/assets/js/39.ecd4c5a2.js"><link rel="prefetch" href="/assets/js/4.507928f4.js"><link rel="prefetch" href="/assets/js/40.cafc7e9d.js"><link rel="prefetch" href="/assets/js/41.c0e737bd.js"><link rel="prefetch" href="/assets/js/42.bc9ca155.js"><link rel="prefetch" href="/assets/js/43.e6bf18b9.js"><link rel="prefetch" href="/assets/js/44.8f00f03e.js"><link rel="prefetch" href="/assets/js/45.ba2e967b.js"><link rel="prefetch" href="/assets/js/46.3cd530c2.js"><link rel="prefetch" href="/assets/js/47.c9053580.js"><link rel="prefetch" href="/assets/js/48.771aeb88.js"><link rel="prefetch" href="/assets/js/49.70a524f8.js"><link rel="prefetch" href="/assets/js/5.19da05fc.js"><link rel="prefetch" href="/assets/js/50.7e2feeda.js"><link rel="prefetch" href="/assets/js/51.e25c3ca8.js"><link rel="prefetch" href="/assets/js/52.dd7c4299.js"><link rel="prefetch" href="/assets/js/53.a0b7121a.js"><link rel="prefetch" href="/assets/js/54.9c2ed1f8.js"><link rel="prefetch" href="/assets/js/55.706ec0f6.js"><link rel="prefetch" href="/assets/js/56.b201d693.js"><link rel="prefetch" href="/assets/js/57.303d1f09.js"><link rel="prefetch" href="/assets/js/58.ca88b75b.js"><link rel="prefetch" href="/assets/js/59.64ec25b4.js"><link rel="prefetch" href="/assets/js/6.37cb0a57.js"><link rel="prefetch" href="/assets/js/60.cf308290.js"><link rel="prefetch" href="/assets/js/61.ed5c9a1b.js"><link rel="prefetch" href="/assets/js/62.dee642fe.js"><link rel="prefetch" href="/assets/js/63.2129fc1c.js"><link rel="prefetch" href="/assets/js/64.5175f043.js"><link rel="prefetch" href="/assets/js/65.36555c28.js"><link rel="prefetch" href="/assets/js/66.74fed4ac.js"><link rel="prefetch" href="/assets/js/67.f8adc63b.js"><link rel="prefetch" href="/assets/js/68.dd3b9ed3.js"><link rel="prefetch" href="/assets/js/69.4d3de8fc.js"><link rel="prefetch" href="/assets/js/7.c6be7039.js"><link rel="prefetch" href="/assets/js/70.70e076af.js"><link rel="prefetch" href="/assets/js/71.0ccd5a35.js"><link rel="prefetch" href="/assets/js/72.0b715a70.js"><link rel="prefetch" href="/assets/js/73.cbea40ce.js"><link rel="prefetch" href="/assets/js/74.4334c924.js"><link rel="prefetch" href="/assets/js/75.976df827.js"><link rel="prefetch" href="/assets/js/76.56618ee1.js"><link rel="prefetch" href="/assets/js/77.6ee7fe40.js"><link rel="prefetch" href="/assets/js/78.6ec73b0a.js"><link rel="prefetch" href="/assets/js/79.d1002a7b.js"><link rel="prefetch" href="/assets/js/8.b1147ef3.js"><link rel="prefetch" href="/assets/js/80.12854f89.js"><link rel="prefetch" href="/assets/js/81.e29e0ed1.js"><link rel="prefetch" href="/assets/js/82.ca5c4420.js"><link rel="prefetch" href="/assets/js/83.92b94cd0.js"><link rel="prefetch" href="/assets/js/84.60568398.js"><link rel="prefetch" href="/assets/js/85.8e4c8731.js"><link rel="prefetch" href="/assets/js/86.18b6e6bc.js"><link rel="prefetch" href="/assets/js/88.bdb54a97.js"><link rel="prefetch" href="/assets/js/89.2fd79c29.js"><link rel="prefetch" href="/assets/js/9.6f233a01.js"><link rel="prefetch" href="/assets/js/90.90ba087d.js"><link rel="prefetch" href="/assets/js/91.bafc0026.js"><link rel="prefetch" href="/assets/js/92.3f3a701e.js"><link rel="prefetch" href="/assets/js/93.f8474848.js"><link rel="prefetch" href="/assets/js/94.509f9782.js"><link rel="prefetch" href="/assets/js/95.e4be1766.js"><link rel="prefetch" href="/assets/js/96.8b3ccc3e.js"><link rel="prefetch" href="/assets/js/97.8a6976df.js"><link rel="prefetch" href="/assets/js/98.2b4a5305.js"><link rel="prefetch" href="/assets/js/99.39424de5.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ae7eb767.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>XXXWeii</h3> <p class="description" data-v-59e6cb88>zjw的Blog</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>XXXWeii</span>
+          
+        <span data-v-59e6cb88>2022 - </span>
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.jpg" alt="XXXWeii" class="logo"> <span class="site-name">XXXWeii</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link"><i class="iconfont reco-date"></i>
+  learning Path
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/HTML/Only use 1 label to realize Douyin Logo~.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/CSS/A Pure CSS Flying Helicopter Animation Guide.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/1000 if elses teach you how to achieve branch optimization.html" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/TypeScript/11 must-have skills for TypeScript programmers to advance.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/Vue/Frequently Asked Questions about Vue.html" class="nav-link"><i class="undefined"></i>
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/Nginx/Nginx review summary of front-end essential knowledge.html" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/Other/Git common commands.html" class="nav-link"><i class="undefined"></i>
+  Other
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      Frame
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zh-hans.reactjs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  React
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://angular.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Angular
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://emberjs.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Ember
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.preactjs.com.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Preact
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      Contacts
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/XXXWeii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://twitter.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-twitter"></i>
+  Twitter
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.facebook.com/QQ977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-facebook"></i>
+  Facebook
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="mailto:977020646@qq.com" class="nav-link external"><i class="iconfont reco-mail"></i>
+  E-Mail
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/WeChat.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  WeChat
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/QQ.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-qq"></i>
+  QQ
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="https://www.javascriptcn.com/js/js-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  JavaScript
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.nginx.cn/doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Nginx
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://nodejs.org/api/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  NodeJS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  简体中文
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-be41250a data-v-7dd95ae2><img src="/logo.jpg" alt="author-avatar" class="personal-img" data-v-be41250a> <h3 class="name" data-v-be41250a>
+    XXXWeii
+  </h3> <div class="num" data-v-be41250a><div data-v-be41250a><h4 data-v-be41250a>Looking forward to seeing you next time with longing</h4></div></div> <ul class="social-links" data-v-be41250a></ul> <hr data-v-be41250a></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link"><i class="iconfont reco-date"></i>
+  learning Path
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/HTML/Only use 1 label to realize Douyin Logo~.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/CSS/A Pure CSS Flying Helicopter Animation Guide.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/JavaScript/1000 if elses teach you how to achieve branch optimization.html" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/TypeScript/11 must-have skills for TypeScript programmers to advance.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/Vue/Frequently Asked Questions about Vue.html" class="nav-link"><i class="undefined"></i>
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/Nginx/Nginx review summary of front-end essential knowledge.html" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/Other/Git common commands.html" class="nav-link"><i class="undefined"></i>
+  Other
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      Frame
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zh-hans.reactjs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  React
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://angular.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Angular
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://emberjs.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Ember
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.preactjs.com.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Preact
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      Contacts
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/XXXWeii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://twitter.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-twitter"></i>
+  Twitter
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.facebook.com/QQ977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-facebook"></i>
+  Facebook
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="mailto:977020646@qq.com" class="nav-link external"><i class="iconfont reco-mail"></i>
+  E-Mail
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/WeChat.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  WeChat
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/QQ.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-qq"></i>
+  QQ
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="https://www.javascriptcn.com/js/js-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  JavaScript
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.nginx.cn/doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Nginx
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://nodejs.org/api/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  NodeJS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  简体中文
+</a></li></ul></div></div> <!----></nav> <ul class="sidebar-links"><li><a href="/Other/Git common commands.html" class="sidebar-link">Git common commands</a></li><li><a href="/Other/Markdown Syntax Guide.html" class="sidebar-link">Markdown Syntax Guide</a></li><li><a href="/Other/Fuzzy search keyword highlighting.html" class="sidebar-link">Fuzzy search keyword highlighting</a></li><li><a href="/Other/CentOS8 configure Nginx.html" class="sidebar-link">CentOS8 configure Nginx</a></li><li><a href="/Other/SPA first screen loading speed.html" class="sidebar-link">SPA first screen loading speed</a></li><li><a href="/Other/HTTP and HTTPS.html" class="sidebar-link">HTTP and HTTPS</a></li><li><a href="/Other/HTTP common status codes.html" class="sidebar-link">HTTP common status codes</a></li><li><a href="/Other/Enter the URL in the address bar and press Enter.html" class="sidebar-link">Enter the URL in the address bar and press Enter</a></li><li><a href="/Other/Why does TCP need three handshakes and four waves.html" class="sidebar-link">Why does TCP need three handshakes and four waves</a></li><li><a href="/Other/Ajax principle and implementation.html" class="sidebar-link">Ajax principle and implementation</a></li><li><a href="/Other/video mouse movement preview.html" class="sidebar-link">video mouse movement preview</a></li><li><a href="/Other/Important meta tags for SEO optimization.html" class="sidebar-link">Important meta tags for SEO optimization</a></li><li><a href="/Other/6 ES6 tricks that let you write less and do more.html" class="sidebar-link">6 ES6 tricks that let you write less and do more</a></li><li><a href="/Other/How to control Loading in Axios.html" class="sidebar-link">How to control Loading in Axios</a></li><li><a href="/Other/The details of async and await devils that you don't know.html" class="active sidebar-link">The details of async and await devils that you don't know</a></li><li><a href="/Other/Interviewer If there are 100 requests, how do you use Promise to control concurrency.html" class="sidebar-link">Interviewer If there are 100 requests, how do you use Promise to control concurrency?</a></li><li><a href="/Other/Top 10 Node.js Libraries Can Help You Optimize Your Code And Simplify Development.html" class="sidebar-link">Top 10 Node.js Libraries Can Help You Optimize Your Code And Simplify Development</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>The details of async and await devils that you don't know</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>XXXWeii</span>
+          
+        <span data-v-59e6cb88>2022 - </span>
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">The details of async and await devils that you don't know</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>XXXWeii</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>4/21/2022</span></i> <i class="iconfont reco-eye" data-v-8a445198><span id="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-8a445198><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Other</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="_0-preface"><a href="#_0-preface" class="header-anchor">#</a> 0. Preface</h2> <hr> <p>Regarding the use of <code>promise, async/await</code>, I believe many friends are familiar with it, but when it comes to <strong>event loop mechanism output results</strong> similar topics, do you dare to say that they know it?</p> <p>give it a try?</p> <p>🌰1:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+     await new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+     console. log('A')
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+
+// Final result 👉: B A C D
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>🌰2:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+     await async2()
+     console. log('A')
+}
+
+async function async2 () {
+     return new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+
+// Final result 👉: B C D A
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><p>❓ Why is there a difference in basically the same code, not much to say 👇</p> <h2 id="_1-async-function-return-value"><a href="#_1-async-function-return-value" class="header-anchor">#</a> 1. async function return value</h2> <hr> <p>Before discussing <code>await</code>, let’s talk about how the <code>async</code> function handles the return value. It will identify the type of the return value just like <code>Promise.prototype.then</code>.</p> <p>👉<strong>According to the type of the return value, the js engine handles the return value differently</strong></p> <blockquote><p>📑 Conclusion: When the <code>async</code> function throws a return value, it will start <strong>different numbers of microtasks</strong> according to the return value <strong>type</strong></p> <ul><li>return result value: not <code>thenable</code>, not <code>promise</code> (do not wait)</li> <li>return result value: <code>thenable</code> (waiting for 1 <code>then</code> time)</li> <li>return result value: <code>promise</code> (waiting for 2 <code>then</code> time)</li></ul></blockquote> <p>🌰1:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testA () {
+     return 1;
+}
+
+testA().then(() =&gt; console.log(1));
+Promise. resolve()
+     .then(() =&gt; console.log(2))
+     .then(() =&gt; console.log(3));
+
+// (without waiting) final result 👉: 1 2 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>🌰2:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testB () {
+     return {
+         then (cb) {
+             cb();
+         }
+     };
+}
+
+testB().then(() =&gt; console.log(1));
+Promise. resolve()
+     .then(() =&gt; console.log(2))
+     .then(() =&gt; console.log(3));
+
+// (wait for a then) final result 👉: 2 1 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>🌰3:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testC () {
+     return new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+}
+
+testC().then(() =&gt; console.log(1));
+Promise. resolve()
+     .then(() =&gt; console.log(2))
+     .then(() =&gt; console.log(3));
+
+// (waiting for two then) final result 👉: 2 3 1
+
+
+
+
+async function testC () {
+     return new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+}
+
+testC().then(() =&gt; console.log(1));
+Promise. resolve()
+     .then(() =&gt; console.log(2))
+     .then(() =&gt; console.log(3))
+     .then(() =&gt; console.log(4))
+
+// (waiting for two then) final result 👉: 2 3 1 4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><p>After reading these three 🌰, do you have a deeper understanding of the <code>above conclusion</code>?</p> <p>Don't be impatient, let's try a classic interview question 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+     console. log('1')
+     await async2()
+     console.log('AAA')
+}
+
+async function async2 () {
+     console. log('3')
+     return new Promise((resolve, reject) =&gt; {
+         resolve()
+         console. log('4')
+     })
+}
+
+console. log('5')
+
+setTimeout(() =&gt; {
+     console. log('6')
+}, 0);
+
+async1()
+
+new Promise((resolve) =&gt; {
+     console. log('7')
+     resolve()
+}).then(() =&gt; {
+     console. log('8')
+}).then(() =&gt; {
+     console. log('9')
+}).then(() =&gt; {
+     console. log('10')
+})
+console. log('11')
+
+// Final result 👉: 5 1 3 4 7 11 8 9 AAA 10 6
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><p>👀 Did you make a mistake?</p> <p>Haha, no problem</p> <blockquote><p>Step split 👇:</p> <ol><li><p>Execute the synchronous code first, and output <code>5</code></p></li> <li><p>Executing <code>setTimeout</code> is put into the macro task asynchronous queue</p></li> <li><p>Then execute the <code>async1</code> function and output <code>1</code></p></li> <li><p>Execute <code>async2</code> function, output <code>3</code></p></li> <li><p>The code in the <code>Promise</code> constructor is a synchronous code, output <code>4</code></p></li></ol> <blockquote><p>The return value of the <code>async2</code> function is <code>Promise</code>, and it will be released after waiting for <code>2</code> <code>then</code>, so <code>AAA</code> cannot be output temporarily</p></blockquote> <ol start="6"><li><p><code>async1</code> function <strong>temporary</strong> ends, continue to go down, output <code>7</code></p></li> <li><p>Synchronous code, output <code>11</code></p></li> <li><p>Execute the first <code>then</code>, output <code>8</code></p></li> <li><p>Execute the second <code>then</code>, output <code>9</code></p></li> <li><p>Finally <strong>wait</strong> until the two <code>then</code>s are executed, execute the rest of the <code>async1</code> function, and output <code>AAA</code></p></li> <li><p>Execute the last microtask <code>then</code> and output <code>10</code></p></li> <li><p>Execute the last macrotask <code>setTimeout</code>, output <code>6</code></p></li></ol></blockquote> <p>❓ Is it suddenly clear, welcome to like and collect!</p> <h2 id="_2-differences-between-await-rvalue-types"><a href="#_2-differences-between-await-rvalue-types" class="header-anchor">#</a> 2. Differences between await rvalue types</h2> <hr> <h3 id="_2-1-non-thenable"><a href="#_2-1-non-thenable" class="header-anchor">#</a> 2.1, non <code>thenable</code></h3> <p>🌰1:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(1);
+     await 1;
+     console. log(2);
+}
+
+test();
+console. log(3);
+// Final result 👉: 1 3 2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>🌰2:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+     console. log(2);
+}
+
+async function test () {
+     console. log(1);
+     await func();
+     console. log(3);
+}
+
+test();
+console. log(4);
+
+// Final result 👉: 1 2 4 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>🌰3:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(1);
+     await 123
+     console. log(2);
+}
+
+test();
+console. log(3);
+
+Promise. resolve()
+     .then(() =&gt; console.log(4))
+     .then(() =&gt; console.log(5))
+     .then(() =&gt; console.log(6))
+     .then(() =&gt; console.log(7));
+
+// Final result 👉: 1 3 2 4 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><blockquote><p>Note:</p> <p><code>await</code> followed by a non-<code>thenable</code> type will immediately add a microtask <code>then</code> to the microtask queue, <strong>but no need to wait</strong></p></blockquote> <h3 id="_2-2-thenable-type"><a href="#_2-2-thenable-type" class="header-anchor">#</a> 2.2, <code>thenable</code> type</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(1);
+     await {
+         then (cb) {
+             cb();
+         },
+     };
+     console. log(2);
+}
+
+test();
+console. log(3);
+
+Promise. resolve()
+     .then(() =&gt; console.log(4))
+     .then(() =&gt; console.log(5))
+     .then(() =&gt; console.log(6))
+     .then(() =&gt; console.log(7));
+
+// Final result 👉: 1 3 4 2 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><blockquote><p>Note:</p> <p><code>await</code> is followed by <code>thenable</code> type, which needs to be executed after **waiting for a <code>then</code> time</p></blockquote> <h3 id="_2-3-promise-type"><a href="#_2-3-promise-type" class="header-anchor">#</a> 2.3, <code>Promise</code> type</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(1);
+     await new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+     console. log(2);
+}
+
+test();
+console. log(3);
+
+Promise. resolve()
+     .then(() =&gt; console.log(4))
+     .then(() =&gt; console.log(5))
+     .then(() =&gt; console.log(6))
+     .then(() =&gt; console.log(7));
+
+// Final result 👉: 1 3 2 4 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>❓ Why does it behave the same as a non <code>thenable</code> value? Why not wait for two <code>then</code>s?</p> <blockquote><p>Note:</p> <ul><li>TC 39 (the ECMAScript standard setter) made a modification to how to handle <code>await</code> followed by <code>promise</code>, <strong>removed</strong> two additional microtasks, in <strong>earlier versions</strong>, Will still wait for two <code>then</code> time</li> <li>Someone translated the official explanation: <strong>faster async functions and promises</strong>[1], but the <code>thenable</code> is not modified in this update</li></ul></blockquote> <hr> <p>Doing so can greatly optimize the speed of <code>await</code> waiting 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function func () {
+     console. log(1);
+     await 1;
+     console. log(2);
+     await 2;
+     console. log(3);
+     await 3;
+     console. log(4);
+}
+
+async function test () {
+     console. log(5);
+     await func();
+     console. log(6);
+}
+
+test();
+console. log(7);
+
+Promise. resolve()
+     .then(() =&gt; console.log(8))
+     .then(() =&gt; console.log(9))
+     .then(() =&gt; console.log(10))
+     .then(() =&gt; console.log(11));
+
+// Final result 👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><blockquote><p>Note:</p> <p><code>await</code> and <code>Promise.prototype.then</code> are often equivalent in <strong>chronological order</strong>, but there is an <strong>essential difference</strong> between them.</p></blockquote> <blockquote><ul><li>The <code>await</code> in the <code>test</code> function will wait for all the <code>await</code> in the <code>func</code> function to get the command to resume function execution and the command to get <strong>resume function execution</strong> after the entire function is executed;</li> <li>That is to say, the <code>await</code> of the <code>func</code> function <strong>cannot be equivalent</strong> <code>then</code> in time order at this time, but waits until the <code>test</code> function is completely executed;</li> <li>For example, the number <code>6</code> here is output very late, <strong>if</strong> is simply regarded as <code>then</code>, <code>6</code> should be output as a synchronous code when the next microtask queue is executed.</li></ul></blockquote> <hr> <p>So we can merge the code of the two functions 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(5);
+
+     console. log(1);
+     await 1;
+     console. log(2);
+     await 2;
+     console. log(3);
+     await 3;
+     console. log(4);
+     await null;
+
+     console. log(6);
+}
+
+test();
+console. log(7);
+
+Promise. resolve()
+     .then(() =&gt; console.log(8))
+     .then(() =&gt; console.log(9))
+     .then(() =&gt; console.log(10))
+     .then(() =&gt; console.log(11));
+
+// Final result 👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><hr> <p>Because the original function is fused, <code>await</code> at this time can be equivalent to <code>Promise.prototype.then</code>, and it can be completely equivalent to the following code 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(5);
+     console. log(1);
+     Promise. resolve()
+         .then(() =&gt; console.log(2))
+         .then(() =&gt; console.log(3))
+         .then(() =&gt; console.log(4))
+         .then(() =&gt; console.log(6))
+}
+
+test();
+console. log(7);
+
+Promise. resolve()
+     .then(() =&gt; console.log(8))
+     .then(() =&gt; console.log(9))
+     .then(() =&gt; console.log(10))
+     .then(() =&gt; console.log(11));
+
+// Final result 👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><hr> <p>The above three writing methods are completely equivalent in the order of time, so you can regard the code after <code>await</code> as the result of executing it in <code>then</code>, and because the <code>async</code> function will return <code>promise</code> Instance, so it can also be equivalent to 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(5);
+     console. log(1);
+}
+
+test()
+     .then(() =&gt; console.log(2))
+     .then(() =&gt; console.log(3))
+     .then(() =&gt; console.log(4))
+     .then(() =&gt; console.log(6))
+
+console. log(7);
+
+Promise. resolve()
+     .then(() =&gt; console.log(8))
+     .then(() =&gt; console.log(9))
+     .then(() =&gt; console.log(10))
+     .then(() =&gt; console.log(11));
+
+// Final result 👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>It can be found that the <code>test</code> function is all synchronous code...</p> <p>So 👉: <strong><code>async/await</code> is a synchronous way to perform asynchronous operations</strong></p> <h2 id="_3、🌰"><a href="#_3、🌰" class="header-anchor">#</a> 3、🌰</h2> <hr> <p>🌰1:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async2 () {
+     new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+}
+
+async function async3 () {
+     return new Promise((resolve, reject) =&gt; {
+         resolve()
+     })
+}
+
+async function async1 () {
+     // Method 1: Final result: B A C D
+     // await new Promise((resolve, reject) =&gt; {
+     // resolve()
+     // })
+
+     // Method 2: Final result: B A C D
+     // await async2()
+
+     // Method 3: Final result: B C D A
+     await async3()
+
+     console. log('A')
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br></div></div><blockquote><p>General idea 👇:</p> <ul><li>First, the overall return value of an <code>async</code> function is always a <code>Promise</code>, no matter what the value itself is**</li> <li>Method 1: <code>await</code> is <code>Promise</code>, no need to wait</li> <li>Method 2: <code>await</code> is an <code>async</code> function, but the return value of the function itself is <strong>not <code>thenable</code></strong>, no need to wait</li> <li>Method 3: <code>await</code> is <code>async</code> function, and the return value itself is <code>Promise</code>, need to wait for two <code>then</code> time</li></ul></blockquote> <p>🌰2:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+     console. log(2);
+
+     // Method 1: 1 2 4 5 3 6 7
+     // Promise. resolve()
+     // .then(() =&gt; console.log(5))
+     // .then(() =&gt; console.log(6))
+     // .then(() =&gt; console.log(7))
+
+     // Method 2: 1 2 4 5 6 7 3
+     return Promise. resolve()
+         .then(() =&gt; console.log(5))
+         .then(() =&gt; console.log(6))
+         .then(() =&gt; console.log(7))
+}
+
+async function test () {
+     console. log(1);
+     await func();
+     console. log(3);
+}
+
+test();
+console. log(4);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><blockquote><p>Step split 👇:</p> <ul><li><p>Method 1:</p></li> <li><ul><li>The synchronous code outputs <code>1, 2</code>, then adds <code>then1</code> at <code>log(5)</code> to the microtask queue, <code>await</code> gets the exact <code>func</code> function return value <code>undefined</code>, and the subsequent code Put it into the microtask queue (<code>then2</code>, you can understand it like this)</li></ul></li> <li><p>Execute the synchronous code and output <code>4</code>, so far, all synchronous codes are completed</p></li> <li><p>Execute the first placed microtask <code>then1</code> output <code>5</code>, generate <code>log(6)</code> microtask <code>then3</code></p></li> <li><p>Execute the second placed microtask <code>then2</code> output <code>3</code></p></li> <li><p>Then execute microtask <code>then3</code>, output <code>6</code>, generate <code>log(7)</code> microtask <code>then4</code></p></li> <li><p>Execute <code>then4</code>, output <code>7</code></p></li> <li><p>Method 2:</p></li> <li><ul><li>The synchronous code outputs <code>1, 2</code>, <code>await</code> gets the return value of the <code>func</code> function, but does not get <strong>specific results</strong> (determined by the mechanism of <code>Promise</code> itself), suspend the execution of the current <code>async</code>Code inside the function (jump out, give way)</li></ul></li> <li><p>Output <code>4</code>, so far, all synchronous codes are completed</p></li> <li><p><code>await</code> waits until <code>Promise.resolve().then...</code> is executed, and then releases <code>3</code></p></li></ul></blockquote> <p>Method 2 I don’t quite understand ❓</p> <p>continue 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+     console. log(2);
+
+     return Promise. resolve()
+         .then(() =&gt; console.log(5))
+         .then(() =&gt; console.log(6))
+         .then(() =&gt; console.log(7))
+}
+
+async function test () {
+     console. log(1);
+     await func()
+     console. log(3);
+}
+
+test();
+console. log(4);
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+
+// Final result 👉: 1 2 4 B 5 C 6 D 7 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><p>Still don't get it?</p> <p>continue 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+     console. log(1);
+     await Promise. resolve()
+         .then(() =&gt; console.log(5))
+         .then(() =&gt; console.log(6))
+         .then(() =&gt; console.log(7))
+     console. log(3);
+}
+
+test();
+console. log(4);
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+
+// Final result 👉: 1 4 B 5 C 6 D 7 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><blockquote><p>Note:</p> <p>To sum up, <code>await</code> must wait until the expression on the right has <strong>exact value</strong> before releasing it, otherwise it will wait forever (blocking the subsequent code in the current <code>async</code> function), if you are not convinced, take a look at this 👇</p> <ul><li><div class="language- line-numbers-mode"><pre class="language-text"><code></code></pre> <div class="line-numbers-wrapper"></div></div></li></ul> <p>function func () {
+return new Promise((resolve) =&gt; {
+console. log('B')
+// resolve() deliberately keeps pending
+})
+}</p> <p>async function test () {
+console. log(1);
+await func()
+console. log(3);
+}</p> <p>test();
+console. log(4);
+// final result 👉: 1 B 4 (3 will never be printed)</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+
+// --------------------- or written as 👇-------------------
+async function test () {
+console. log(1);
+await new Promise((resolve) =&gt; {
+console. log('B')
+// resolve() deliberately keeps pending
+})
+console. log(3);
+}
+
+test();
+console. log(4);
+// final result 👉: 1 B 4 (3 will never be printed)
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code></code></pre> <div class="line-numbers-wrapper"></div></div></blockquote> <p>🌰3:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function func () {
+     console. log(2);
+     return {
+         then (cb) {
+             cb()
+         }
+     }
+}
+
+async function test () {
+     console. log(1);
+     await func();
+     console. log(3);
+}
+
+test();
+console. log(4);
+
+new Promise((resolve) =&gt; {
+     console. log('B')
+     resolve()
+}).then(() =&gt; {
+     console. log('C')
+}).then(() =&gt; {
+     console. log('D')
+})
+
+// Final result 👉: 1 2 4 B C 3 D
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><blockquote><p>Step split 👇:</p> <ul><li>synchronous code outputs <code>1, 2</code></li> <li><code>await</code> gets the specific return value <code>thenable</code> of the <code>func</code> function, and puts the subsequent code in the current <code>async</code> function into the microtask <code>then1</code> (but it needs to wait for a <code>then</code> time)</li> <li>synchronous code outputs <code>4, B</code>, microtask <code>then2</code> that generates <code>log(C)</code></li> <li>Because <code>then1</code> lags behind by a <code>then</code> time, execute <code>then2</code> directly to output <code>C</code>, and generate <code>log(D)</code> microtask <code>then3</code></li> <li>Execute the microtask <code>then1</code> that was originally delayed by a <code>then</code> time, and output <code>3</code></li> <li>Execute the last microtask <code>then3</code> output <code>D</code></li></ul></blockquote> <h2 id="_4-summary"><a href="#_4-summary" class="header-anchor">#</a> 4. Summary</h2> <hr> <blockquote><p><code>async</code> function return value</p> <ul><li><p>📑 Conclusion: When the <code>async</code> function throws a return value, it will start <strong>different numbers of microtasks</strong> according to the return value <strong>type</strong></p></li> <li><ul><li>return result value: not <code>thenable</code>, not <code>promise</code> (do not wait)</li></ul></li> <li><p>return result value: <code>thenable</code> (waiting for 1 <code>then</code> time)</p></li> <li><p>return result value: <code>promise</code> (waiting for 2 <code>then</code> time)</p></li></ul> <p>The difference between <code>await</code> rvalue types</p> <ul><li><p>Receive a non-<code>thenable</code> type, a microtask <code>then</code> will be added to the microtask queue immediately, <strong>but no need to wait</strong></p></li> <li><p>connected to the <code>thenable</code> type, you need to <strong>wait for a <code>then</code> time before executing</strong></p></li> <li><p>Receive the <code>Promise</code> type (with a definite return value), and immediately add a microtask <code>then</code> to the microtask queue, <strong>but no need to wait</strong></p></li> <li><ul><li>TC 39 made a modification to how to deal with <code>await</code> followed by <code>promise</code>, <strong>removed</strong> two extra microtasks, in <strong>earlier version</strong>, it will still wait for two <code>then</code> time</li></ul></li></ul></blockquote> <h3 id="references"><a href="#references" class="header-anchor">#</a> References</h3> <hr> <p>[1] https://juejin.cn/post/6844903715342647310#heading-3: <em>https://juejin.cn/post/6844903715342647310#heading-3</em></p></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/Other/How to control Loading in Axios.html" class="prev">
+          How to control Loading in Axios
+        </a></span> <span class="next"><a href="/Other/Interviewer If there are 100 requests, how do you use Promise to control concurrency.html">
+          Interviewer If there are 100 requests, how do you use Promise to control concurrency?
+        </a></span></p></div> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_0-preface" class="sidebar-link reco-side-_0-preface" data-v-b57cc07c>0. Preface</a></li><li class="level-2" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_1-async-function-return-value" class="sidebar-link reco-side-_1-async-function-return-value" data-v-b57cc07c>1. async function return value</a></li><li class="level-2" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-differences-between-await-rvalue-types" class="sidebar-link reco-side-_2-differences-between-await-rvalue-types" data-v-b57cc07c>2. Differences between await rvalue types</a></li><li class="level-3" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-1-non-thenable" class="sidebar-link reco-side-_2-1-non-thenable" data-v-b57cc07c>2.1, non thenable</a></li><li class="level-3" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-2-thenable-type" class="sidebar-link reco-side-_2-2-thenable-type" data-v-b57cc07c>2.2, thenable type</a></li><li class="level-3" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-3-promise-type" class="sidebar-link reco-side-_2-3-promise-type" data-v-b57cc07c>2.3, Promise type</a></li><li class="level-2" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_3、🌰" class="sidebar-link reco-side-_3、🌰" data-v-b57cc07c>3、🌰</a></li><li class="level-2" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_4-summary" class="sidebar-link reco-side-_4-summary" data-v-b57cc07c>4. Summary</a></li><li class="level-3" data-v-b57cc07c><a href="/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#references" class="sidebar-link reco-side-references" data-v-b57cc07c>References</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas><canvas id="Ribbon"></canvas><div class="RibbonAnimation"></div><!----></div></div>
+    <script src="/assets/js/app.e7055c1c.js" defer></script><script src="/assets/js/3.23e16304.js" defer></script><script src="/assets/js/1.f8e854d9.js" defer></script><script src="/assets/js/87.f0bd99a2.js" defer></script><script src="/assets/js/28.d80ff939.js" defer></script>
+  </body>
+</html>

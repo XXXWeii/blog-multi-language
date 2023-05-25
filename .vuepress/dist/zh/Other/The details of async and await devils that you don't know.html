@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>你不知道的 async、await魔鬼细节 | XXXWeii</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/logo.jpg">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon-152x152.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3eaf7c">
+    <meta name="description" content="XXXWeii的博客">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/icons/msapplication-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.ae7eb767.css" as="style"><link rel="preload" href="/assets/js/app.e7055c1c.js" as="script"><link rel="preload" href="/assets/js/3.23e16304.js" as="script"><link rel="preload" href="/assets/js/1.f8e854d9.js" as="script"><link rel="preload" href="/assets/js/121.a0a7fd51.js" as="script"><link rel="preload" href="/assets/js/28.d80ff939.js" as="script"><link rel="prefetch" href="/assets/js/10.8d0bae03.js"><link rel="prefetch" href="/assets/js/100.641bbe69.js"><link rel="prefetch" href="/assets/js/101.738d0c9c.js"><link rel="prefetch" href="/assets/js/102.09c47542.js"><link rel="prefetch" href="/assets/js/103.fd9c926b.js"><link rel="prefetch" href="/assets/js/104.1c14840a.js"><link rel="prefetch" href="/assets/js/105.87952114.js"><link rel="prefetch" href="/assets/js/106.2987dfb5.js"><link rel="prefetch" href="/assets/js/107.c3b64981.js"><link rel="prefetch" href="/assets/js/108.62831d4c.js"><link rel="prefetch" href="/assets/js/109.5853e733.js"><link rel="prefetch" href="/assets/js/11.f04d8888.js"><link rel="prefetch" href="/assets/js/110.b6943564.js"><link rel="prefetch" href="/assets/js/111.92b4092e.js"><link rel="prefetch" href="/assets/js/112.284920b1.js"><link rel="prefetch" href="/assets/js/113.b35f3db3.js"><link rel="prefetch" href="/assets/js/114.e8452cb0.js"><link rel="prefetch" href="/assets/js/115.c1e793de.js"><link rel="prefetch" href="/assets/js/116.46b84bf8.js"><link rel="prefetch" href="/assets/js/117.8f278f7b.js"><link rel="prefetch" href="/assets/js/118.f4a163a4.js"><link rel="prefetch" href="/assets/js/119.14e28f8e.js"><link rel="prefetch" href="/assets/js/12.5574e21a.js"><link rel="prefetch" href="/assets/js/120.81915684.js"><link rel="prefetch" href="/assets/js/122.dff85181.js"><link rel="prefetch" href="/assets/js/123.cf7a8dff.js"><link rel="prefetch" href="/assets/js/124.0beb86a6.js"><link rel="prefetch" href="/assets/js/125.837e9b64.js"><link rel="prefetch" href="/assets/js/126.601f5466.js"><link rel="prefetch" href="/assets/js/127.acade5af.js"><link rel="prefetch" href="/assets/js/128.2b16fef8.js"><link rel="prefetch" href="/assets/js/129.e58767d9.js"><link rel="prefetch" href="/assets/js/13.7ae64cb5.js"><link rel="prefetch" href="/assets/js/130.88b4d627.js"><link rel="prefetch" href="/assets/js/131.75315488.js"><link rel="prefetch" href="/assets/js/132.d04a8458.js"><link rel="prefetch" href="/assets/js/133.019af04d.js"><link rel="prefetch" href="/assets/js/14.1c72689f.js"><link rel="prefetch" href="/assets/js/15.5c2a2421.js"><link rel="prefetch" href="/assets/js/16.97980c8b.js"><link rel="prefetch" href="/assets/js/17.4bba9a62.js"><link rel="prefetch" href="/assets/js/18.fce5b82b.js"><link rel="prefetch" href="/assets/js/19.a06d53f2.js"><link rel="prefetch" href="/assets/js/20.72671ea6.js"><link rel="prefetch" href="/assets/js/21.c9577a2a.js"><link rel="prefetch" href="/assets/js/22.411c93fc.js"><link rel="prefetch" href="/assets/js/23.3df89477.js"><link rel="prefetch" href="/assets/js/24.68c6b216.js"><link rel="prefetch" href="/assets/js/25.8850a7c5.js"><link rel="prefetch" href="/assets/js/26.d7571b0c.js"><link rel="prefetch" href="/assets/js/27.03662f82.js"><link rel="prefetch" href="/assets/js/29.f2ee95e5.js"><link rel="prefetch" href="/assets/js/30.b158307f.js"><link rel="prefetch" href="/assets/js/31.7325ed1c.js"><link rel="prefetch" href="/assets/js/32.eceebac9.js"><link rel="prefetch" href="/assets/js/33.8e49089a.js"><link rel="prefetch" href="/assets/js/34.f503db79.js"><link rel="prefetch" href="/assets/js/35.367f73f9.js"><link rel="prefetch" href="/assets/js/36.f635da2a.js"><link rel="prefetch" href="/assets/js/37.9917f574.js"><link rel="prefetch" href="/assets/js/38.a8f864cd.js"><link rel="prefetch" href="/assets/js/39.ecd4c5a2.js"><link rel="prefetch" href="/assets/js/4.507928f4.js"><link rel="prefetch" href="/assets/js/40.cafc7e9d.js"><link rel="prefetch" href="/assets/js/41.c0e737bd.js"><link rel="prefetch" href="/assets/js/42.bc9ca155.js"><link rel="prefetch" href="/assets/js/43.e6bf18b9.js"><link rel="prefetch" href="/assets/js/44.8f00f03e.js"><link rel="prefetch" href="/assets/js/45.ba2e967b.js"><link rel="prefetch" href="/assets/js/46.3cd530c2.js"><link rel="prefetch" href="/assets/js/47.c9053580.js"><link rel="prefetch" href="/assets/js/48.771aeb88.js"><link rel="prefetch" href="/assets/js/49.70a524f8.js"><link rel="prefetch" href="/assets/js/5.19da05fc.js"><link rel="prefetch" href="/assets/js/50.7e2feeda.js"><link rel="prefetch" href="/assets/js/51.e25c3ca8.js"><link rel="prefetch" href="/assets/js/52.dd7c4299.js"><link rel="prefetch" href="/assets/js/53.a0b7121a.js"><link rel="prefetch" href="/assets/js/54.9c2ed1f8.js"><link rel="prefetch" href="/assets/js/55.706ec0f6.js"><link rel="prefetch" href="/assets/js/56.b201d693.js"><link rel="prefetch" href="/assets/js/57.303d1f09.js"><link rel="prefetch" href="/assets/js/58.ca88b75b.js"><link rel="prefetch" href="/assets/js/59.64ec25b4.js"><link rel="prefetch" href="/assets/js/6.37cb0a57.js"><link rel="prefetch" href="/assets/js/60.cf308290.js"><link rel="prefetch" href="/assets/js/61.ed5c9a1b.js"><link rel="prefetch" href="/assets/js/62.dee642fe.js"><link rel="prefetch" href="/assets/js/63.2129fc1c.js"><link rel="prefetch" href="/assets/js/64.5175f043.js"><link rel="prefetch" href="/assets/js/65.36555c28.js"><link rel="prefetch" href="/assets/js/66.74fed4ac.js"><link rel="prefetch" href="/assets/js/67.f8adc63b.js"><link rel="prefetch" href="/assets/js/68.dd3b9ed3.js"><link rel="prefetch" href="/assets/js/69.4d3de8fc.js"><link rel="prefetch" href="/assets/js/7.c6be7039.js"><link rel="prefetch" href="/assets/js/70.70e076af.js"><link rel="prefetch" href="/assets/js/71.0ccd5a35.js"><link rel="prefetch" href="/assets/js/72.0b715a70.js"><link rel="prefetch" href="/assets/js/73.cbea40ce.js"><link rel="prefetch" href="/assets/js/74.4334c924.js"><link rel="prefetch" href="/assets/js/75.976df827.js"><link rel="prefetch" href="/assets/js/76.56618ee1.js"><link rel="prefetch" href="/assets/js/77.6ee7fe40.js"><link rel="prefetch" href="/assets/js/78.6ec73b0a.js"><link rel="prefetch" href="/assets/js/79.d1002a7b.js"><link rel="prefetch" href="/assets/js/8.b1147ef3.js"><link rel="prefetch" href="/assets/js/80.12854f89.js"><link rel="prefetch" href="/assets/js/81.e29e0ed1.js"><link rel="prefetch" href="/assets/js/82.ca5c4420.js"><link rel="prefetch" href="/assets/js/83.92b94cd0.js"><link rel="prefetch" href="/assets/js/84.60568398.js"><link rel="prefetch" href="/assets/js/85.8e4c8731.js"><link rel="prefetch" href="/assets/js/86.18b6e6bc.js"><link rel="prefetch" href="/assets/js/87.f0bd99a2.js"><link rel="prefetch" href="/assets/js/88.bdb54a97.js"><link rel="prefetch" href="/assets/js/89.2fd79c29.js"><link rel="prefetch" href="/assets/js/9.6f233a01.js"><link rel="prefetch" href="/assets/js/90.90ba087d.js"><link rel="prefetch" href="/assets/js/91.bafc0026.js"><link rel="prefetch" href="/assets/js/92.3f3a701e.js"><link rel="prefetch" href="/assets/js/93.f8474848.js"><link rel="prefetch" href="/assets/js/94.509f9782.js"><link rel="prefetch" href="/assets/js/95.e4be1766.js"><link rel="prefetch" href="/assets/js/96.8b3ccc3e.js"><link rel="prefetch" href="/assets/js/97.8a6976df.js"><link rel="prefetch" href="/assets/js/98.2b4a5305.js"><link rel="prefetch" href="/assets/js/99.39424de5.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ae7eb767.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>XXXWeii</h3> <p class="description" data-v-59e6cb88>zjw的Blog</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>XXXWeii</span>
+          
+        <span data-v-59e6cb88>2022 - </span>
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/zh/" class="home-link router-link-active"><img src="/logo.jpg" alt="XXXWeii" class="logo"> <span class="site-name">XXXWeii</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/zh/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link"><i class="iconfont reco-date"></i>
+  学习路线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/zh/HTML/Only use 1 label to realize Douyin Logo~.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/zh/CSS/A Pure CSS Flying Helicopter Animation Guide.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/zh/JavaScript/1000 if elses teach you how to achieve branch optimization.html" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/zh/TypeScript/11 must-have skills for TypeScript programmers to advance.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Vue/Frequently Asked Questions about Vue.html" class="nav-link"><i class="undefined"></i>
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Nginx/Nginx review summary of front-end essential knowledge.html" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/Git common commands.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      框架
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zh-hans.reactjs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  React
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://angular.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Angular
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://emberjs.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Ember
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.preactjs.com.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Preact
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      联系方式
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/XXXWeii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://twitter.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-twitter"></i>
+  推特
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.facebook.com/QQ977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-facebook"></i>
+  脸书
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="mailto:977020646@qq.com" class="nav-link external"><i class="iconfont reco-mail"></i>
+  邮箱
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/WeChat.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  微信
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/QQ.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-qq"></i>
+  QQ
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="https://www.javascriptcn.com/js/js-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  JavaScript
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.nginx.cn/doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Nginx
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://nodejs.org/api/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  NodeJS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      选择语言
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  简体中文
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-be41250a data-v-7dd95ae2><img src="/logo.jpg" alt="author-avatar" class="personal-img" data-v-be41250a> <h3 class="name" data-v-be41250a>
+    XXXWeii
+  </h3> <div class="num" data-v-be41250a><div data-v-be41250a><h4 data-v-be41250a>带着思念期待着下次相见</h4></div></div> <ul class="social-links" data-v-be41250a></ul> <hr data-v-be41250a></div> <nav class="nav-links"><div class="nav-item"><a href="/zh/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link"><i class="iconfont reco-date"></i>
+  学习路线
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/zh/HTML/Only use 1 label to realize Douyin Logo~.html" class="nav-link"><i class="undefined"></i>
+  HTML
+</a></li><li class="dropdown-item"><!----> <a href="/zh/CSS/A Pure CSS Flying Helicopter Animation Guide.html" class="nav-link"><i class="undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/zh/JavaScript/1000 if elses teach you how to achieve branch optimization.html" class="nav-link"><i class="undefined"></i>
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/zh/TypeScript/11 must-have skills for TypeScript programmers to advance.html" class="nav-link"><i class="undefined"></i>
+  TypeScript
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Vue/Frequently Asked Questions about Vue.html" class="nav-link"><i class="undefined"></i>
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Nginx/Nginx review summary of front-end essential knowledge.html" class="nav-link"><i class="undefined"></i>
+  Nginx
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/Git common commands.html" class="nav-link"><i class="undefined"></i>
+  其他
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-menu"></i>
+      框架
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zh-hans.reactjs.org/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  React
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://angular.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Angular
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://emberjs.com/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Ember
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.preactjs.com.cn/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Preact
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-account"></i>
+      联系方式
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/XXXWeii" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-mayun"></i>
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://twitter.com/zjw977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-twitter"></i>
+  推特
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.facebook.com/QQ977020546" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-facebook"></i>
+  脸书
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="mailto:977020646@qq.com" class="nav-link external"><i class="iconfont reco-mail"></i>
+  邮箱
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/WeChat.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-wechat"></i>
+  微信
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.zhangshuqi.com/images/QQ.jpg" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-qq"></i>
+  QQ
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="https://www.javascriptcn.com/js/js-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  JavaScript
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.nginx.cn/doc/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Nginx
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://nodejs.org/api/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  NodeJS
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      选择语言
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Other/The details of async and await devils that you don't know.html" class="nav-link"><i class="undefined"></i>
+  简体中文
+</a></li></ul></div></div> <!----></nav> <ul class="sidebar-links"><li><a href="/zh/Other/Git common commands.html" class="sidebar-link">Git常用指令</a></li><li><a href="/zh/Other/Markdown Syntax Guide.html" class="sidebar-link">Markdown 语法指南</a></li><li><a href="/zh/Other/Fuzzy search keyword highlighting.html" class="sidebar-link">模糊搜索关键词高亮显示</a></li><li><a href="/zh/Other/CentOS8 configure Nginx.html" class="sidebar-link">CentOS8配置Nginx</a></li><li><a href="/zh/Other/SPA first screen loading speed.html" class="sidebar-link">SPA(单页应用)首屏加载速度</a></li><li><a href="/zh/Other/HTTP and HTTPS.html" class="sidebar-link">HTTP和HTTPS的区别</a></li><li><a href="/zh/Other/HTTP common status codes.html" class="sidebar-link">HTTP 常见的状态码</a></li><li><a href="/zh/Other/Enter the URL in the address bar and press Enter.html" class="sidebar-link">地址栏输入 URL 敲下回车</a></li><li><a href="/zh/Other/Why does TCP need three handshakes and four waves.html" class="sidebar-link">TCP为什么需要三次握手和四次挥手</a></li><li><a href="/zh/Other/Ajax principle and implementation.html" class="sidebar-link">Ajax原理和实现</a></li><li><a href="/zh/Other/video mouse movement preview.html" class="sidebar-link">video鼠标移动预览</a></li><li><a href="/zh/Other/Important meta tags for SEO optimization.html" class="sidebar-link">SEO优化重要的元标签</a></li><li><a href="/zh/Other/6 ES6 tricks that let you write less and do more.html" class="sidebar-link">6个让你少写多做的 ES6 技巧</a></li><li><a href="/zh/Other/How to control Loading in Axios.html" class="sidebar-link">如何在Axios中去控制 Loading？</a></li><li><a href="/zh/Other/The details of async and await devils that you don't know.html" class="active sidebar-link">你不知道的 async、await魔鬼细节</a></li><li><a href="/zh/Other/Interviewer If there are 100 requests, how do you use Promise to control concurrency.html" class="sidebar-link">面试官：如果 100 个请求，你怎么用 Promise 去控制并发？</a></li><li><a href="/zh/Other/Top 10 Node.js Libraries Can Help You Optimize Your Code And Simplify Development.html" class="sidebar-link">10大 Node.js 库可以帮助你优化代码和简化开发</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>你不知道的 async、await魔鬼细节</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>XXXWeii</span>
+          
+        <span data-v-59e6cb88>2022 - </span>
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">你不知道的 async、await魔鬼细节</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>XXXWeii</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2022/4/21</span></i> <i class="iconfont reco-eye" data-v-8a445198><span id="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-8a445198><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>其他</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="_0、前言"><a href="#_0、前言" class="header-anchor">#</a> 0、前言</h2> <hr> <p>关于<code>promise、async/await</code>的使用相信很多小伙伴都比较熟悉了，但是提到<strong>事件循环机制输出结果</strong>类似的题目，你敢说都会？</p> <p>试一试？</p> <p>🌰1：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+    await new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+    console.log('A')
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+
+// 最终结果👉: B A C D
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>🌰2：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+    await async2()
+    console.log('A')
+}
+
+async function async2 () {
+    return new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+
+// 最终结果👉: B C D A
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><p>❓ 基本一样的代码为什么会出现差别，话不多说 👇</p> <h2 id="_1、async-函数返回值"><a href="#_1、async-函数返回值" class="header-anchor">#</a> 1、async 函数返回值</h2> <hr> <p>在讨论 <code>await</code> 之前，先聊一下 <code>async</code> 函数处理返回值的问题，它会像 <code>Promise.prototype.then</code> 一样，会对返回值的类型进行辨识。</p> <p>👉<strong>根据返回值的类型，引起 <code>js引擎</code> 对返回值处理方式的不同</strong></p> <blockquote><p>📑 结论：<code>async</code>函数在抛出返回值时，会根据返回值<strong>类型</strong>开启<strong>不同数目的微任务</strong></p> <ul><li>return 结果值：非<code>thenable</code>、非<code>promise</code>（不等待）</li> <li>return 结果值：<code>thenable</code>（等待 1 个<code>then</code>的时间）</li> <li>return 结果值：<code>promise</code>（等待 2 个<code>then</code>的时间）</li></ul></blockquote> <p>🌰1：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testA () {
+    return 1;
+}
+
+testA().then(() =&gt; console.log(1));
+Promise.resolve()
+    .then(() =&gt; console.log(2))
+    .then(() =&gt; console.log(3));
+
+// (不等待)最终结果👉: 1 2 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>🌰2：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testB () {
+    return {
+        then (cb) {
+            cb();
+        }
+    };
+}
+
+testB().then(() =&gt; console.log(1));
+Promise.resolve()
+    .then(() =&gt; console.log(2))
+    .then(() =&gt; console.log(3));
+
+// (等待一个then)最终结果👉: 2 1 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>🌰3：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function testC () {
+    return new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+}
+
+testC().then(() =&gt; console.log(1));
+Promise.resolve()
+    .then(() =&gt; console.log(2))
+    .then(() =&gt; console.log(3));
+
+// (等待两个then)最终结果👉: 2 3 1
+
+
+
+
+async function testC () {
+    return new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+}
+
+testC().then(() =&gt; console.log(1));
+Promise.resolve()
+    .then(() =&gt; console.log(2))
+    .then(() =&gt; console.log(3))
+    .then(() =&gt; console.log(4))
+
+// (等待两个then)最终结果👉: 2 3 1 4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><p>看了这三个 🌰 是不是对<code>上面的结论</code>有了更深的认识？</p> <p>稍安勿躁，来试试一个经典面试题 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async1 () {
+    console.log('1')
+    await async2()
+    console.log('AAA')
+}
+
+async function async2 () {
+    console.log('3')
+    return new Promise((resolve, reject) =&gt; {
+        resolve()
+        console.log('4')
+    })
+}
+
+console.log('5')
+
+setTimeout(() =&gt; {
+    console.log('6')
+}, 0);
+
+async1()
+
+new Promise((resolve) =&gt; {
+    console.log('7')
+    resolve()
+}).then(() =&gt; {
+    console.log('8')
+}).then(() =&gt; {
+    console.log('9')
+}).then(() =&gt; {
+    console.log('10')
+})
+console.log('11')
+
+// 最终结果👉: 5 1 3 4 7 11 8 9 AAA 10 6
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><p>👀 做错了吧？</p> <p>哈哈没关系</p> <blockquote><p>步骤拆分 👇：</p> <ol><li><p>先执行同步代码，输出<code>5</code></p></li> <li><p>执行<code>setTimeout</code>，是放入宏任务异步队列中</p></li> <li><p>接着执行<code>async1</code>函数，输出<code>1</code></p></li> <li><p>执行<code>async2</code>函数，输出<code>3</code></p></li> <li><p><code>Promise</code>构造器中代码属于同步代码，输出<code>4</code></p> <blockquote><p><code>async2</code>函数的返回值是<code>Promise</code>，等待<code>2</code>个<code>then</code>后放行，所以<code>AAA</code>暂时无法输出</p></blockquote></li> <li><p><code>async1</code>函数<strong>暂时</strong>结束，继续往下走，输出<code>7</code></p></li> <li><p>同步代码，输出<code>11</code></p></li> <li><p>执行第一个<code>then</code>，输出<code>8</code></p></li> <li><p>执行第二个<code>then</code>，输出<code>9</code></p></li> <li><p>终于<strong>等</strong>到了两个<code>then</code>执行完毕，执行<code>async1</code>函数里面剩下的，输出<code>AAA</code></p></li> <li><p>再执行最后一个微任务<code>then</code>，输出<code>10</code></p></li> <li><p>执行最后的宏任务<code>setTimeout</code>，输出<code>6</code></p></li></ol></blockquote> <p>❓ 是不是豁然开朗，欢迎点赞收藏！</p> <h2 id="_2、await-右值类型区别"><a href="#_2、await-右值类型区别" class="header-anchor">#</a> 2、await 右值类型区别</h2> <hr> <h3 id="_2-1、非-thenable"><a href="#_2-1、非-thenable" class="header-anchor">#</a> 2.1、非 <code>thenable</code></h3> <p>🌰1：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(1);
+    await 1;
+    console.log(2);
+}
+
+test();
+console.log(3);
+// 最终结果👉: 1 3 2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>🌰2：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+    console.log(2);
+}
+
+async function test () {
+    console.log(1);
+    await func();
+    console.log(3);
+}
+
+test();
+console.log(4);
+
+// 最终结果👉: 1 2 4 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>🌰3：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(1);
+    await 123
+    console.log(2);
+}
+
+test();
+console.log(3);
+
+Promise.resolve()
+    .then(() =&gt; console.log(4))
+    .then(() =&gt; console.log(5))
+    .then(() =&gt; console.log(6))
+    .then(() =&gt; console.log(7));
+
+// 最终结果👉: 1 3 2 4 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><blockquote><p>Note:</p> <p><code>await</code>后面接非 <code>thenable</code> 类型，会立即向微任务队列添加一个微任务<code>then</code>，<strong>但不需等待</strong></p></blockquote> <h3 id="_2-2、thenable类型"><a href="#_2-2、thenable类型" class="header-anchor">#</a> 2.2、<code>thenable</code>类型</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(1);
+    await {
+        then (cb) {
+            cb();
+        },
+    };
+    console.log(2);
+}
+
+test();
+console.log(3);
+
+Promise.resolve()
+    .then(() =&gt; console.log(4))
+    .then(() =&gt; console.log(5))
+    .then(() =&gt; console.log(6))
+    .then(() =&gt; console.log(7));
+
+// 最终结果👉: 1 3 4 2 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><blockquote><p>Note:</p> <p><code>await</code> 后面接 <code>thenable</code> 类型，需要<strong>等待一个 <code>then</code> 的时间之后</strong>执行</p></blockquote> <h3 id="_2-3、promise类型"><a href="#_2-3、promise类型" class="header-anchor">#</a> 2.3、<code>Promise</code>类型</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(1);
+    await new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+    console.log(2);
+}
+
+test();
+console.log(3);
+
+Promise.resolve()
+    .then(() =&gt; console.log(4))
+    .then(() =&gt; console.log(5))
+    .then(() =&gt; console.log(6))
+    .then(() =&gt; console.log(7));
+
+// 最终结果👉: 1 3 2 4 5 6 7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>❓ 为什么表现的和非 <code>thenable</code> 值一样呢？为什么不等待两个 <code>then</code> 的时间呢？</p> <blockquote><p>Note:</p> <ul><li>TC 39(ECMAScript 标准制定者) 对<code>await</code> 后面是 <code>promise</code> 的情况如何处理进行了一次修改，<strong>移除</strong>了额外的两个微任务，在<strong>早期版本</strong>，依然会等待两个 <code>then</code> 的时间</li> <li>有大佬翻译了官方解释：<strong>更快的 async 函数和 promises</strong>[1]，但在这次更新中并没有修改 <code>thenable</code> 的情况</li></ul></blockquote> <hr> <p>这样做可以极大的优化 <code>await</code> 等待的速度 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function func () {
+    console.log(1);
+    await 1;
+    console.log(2);
+    await 2;
+    console.log(3);
+    await 3;
+    console.log(4);
+}
+
+async function test () {
+    console.log(5);
+    await func();
+    console.log(6);
+}
+
+test();
+console.log(7);
+
+Promise.resolve()
+    .then(() =&gt; console.log(8))
+    .then(() =&gt; console.log(9))
+    .then(() =&gt; console.log(10))
+    .then(() =&gt; console.log(11));
+
+// 最终结果👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><blockquote><p>Note：</p> <p><code>await</code> 和 <code>Promise.prototype.then</code> 虽然很多时候可以在<strong>时间顺序</strong>上能等效，但是它们之间有<strong>本质的区别</strong>。</p></blockquote> <blockquote><ul><li><code>test</code> 函数中的 <code>await</code> 会等待 <code>func</code> 函数中所有的 <code>await</code> 取得 恢复函数执行 的命令并且整个函数执行完毕后才能获得取得 <strong>恢复函数执行</strong>的命令；</li> <li>也就是说，<code>func</code> 函数的 <code>await</code> 此时<strong>不能在时间的顺序上等效</strong> <code>then</code>，而要等待到 <code>test</code> 函数完全执行完毕；</li> <li>比如这里的数字<code>6</code>很晚才输出，<strong>如果</strong>单纯看成<code>then</code>的话，在下一个微任务队列执行时<code>6</code>就应该作为同步代码输出了才对。</li></ul></blockquote> <hr> <p>所以我们可以合并两个函数的代码 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(5);
+
+    console.log(1);
+    await 1;
+    console.log(2);
+    await 2;
+    console.log(3);
+    await 3;
+    console.log(4);
+    await null;
+
+    console.log(6);
+}
+
+test();
+console.log(7);
+
+Promise.resolve()
+    .then(() =&gt; console.log(8))
+    .then(() =&gt; console.log(9))
+    .then(() =&gt; console.log(10))
+    .then(() =&gt; console.log(11));
+
+// 最终结果👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><hr> <p>因为将原本的函数融合，此时的 <code>await</code> 可以等效为 <code>Promise.prototype.then</code>，又完全可以等效如下代码 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(5);
+    console.log(1);
+    Promise.resolve()
+        .then(() =&gt; console.log(2))
+        .then(() =&gt; console.log(3))
+        .then(() =&gt; console.log(4))
+        .then(() =&gt; console.log(6))
+}
+
+test();
+console.log(7);
+
+Promise.resolve()
+    .then(() =&gt; console.log(8))
+    .then(() =&gt; console.log(9))
+    .then(() =&gt; console.log(10))
+    .then(() =&gt; console.log(11));
+
+// 最终结果👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><hr> <p>以上三种写法在时间的顺序上完全等效，所以你 <strong>完全可以将 <code>await</code> 后面的代码可以看做在 <code>then</code> 里面执行的结果</strong>，又因为 <code>async</code> 函数会返回 <code>promise</code> 实例，所以还可以等效成 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(5);
+    console.log(1);
+}
+
+test()
+    .then(() =&gt; console.log(2))
+    .then(() =&gt; console.log(3))
+    .then(() =&gt; console.log(4))
+    .then(() =&gt; console.log(6))
+
+console.log(7);
+
+Promise.resolve()
+    .then(() =&gt; console.log(8))
+    .then(() =&gt; console.log(9))
+    .then(() =&gt; console.log(10))
+    .then(() =&gt; console.log(11));
+
+// 最终结果👉: 5 1 7 2 8 3 9 4 10 6 11
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>可以发现，<code>test</code> 函数全是走的同步代码...</p> <p>所以 👉：<strong><code>async/await</code> 是用同步的方式，执行异步操作</strong></p> <h2 id="_3、🌰"><a href="#_3、🌰" class="header-anchor">#</a> 3、🌰</h2> <hr> <p>🌰1：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function async2 () {
+    new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+}
+
+async function async3 () {
+    return new Promise((resolve, reject) =&gt; {
+        resolve()
+    })
+}
+
+async function async1 () {
+    // 方式一：最终结果：B A C D
+    // await new Promise((resolve, reject) =&gt; {
+    //     resolve()
+    // })
+
+    // 方式二：最终结果：B A C D
+    // await async2()
+
+    // 方式三：最终结果：B C D A
+    await async3()
+
+    console.log('A')
+}
+
+async1()
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br></div></div><blockquote><p>大致思路 👇：</p> <ul><li>首先，<strong><code>async</code>函数的整体返回值永远都是<code>Promise</code>，无论值本身是什么</strong></li> <li>方式一：<code>await</code>的是<code>Promise</code>，无需等待</li> <li>方式二：<code>await</code>的是<code>async</code>函数，但是该函数的返回值本身是<strong>非<code>thenable</code></strong>，无需等待</li> <li>方式三：<code>await</code>的是<code>async</code>函数，且返回值本身是<code>Promise</code>，需等待两个<code>then</code>时间</li></ul></blockquote> <p>🌰2：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+    console.log(2);
+
+    // 方式一：1 2 4  5 3 6 7
+    // Promise.resolve()
+    //     .then(() =&gt; console.log(5))
+    //     .then(() =&gt; console.log(6))
+    //     .then(() =&gt; console.log(7))
+
+    // 方式二：1 2 4  5 6 7 3
+    return Promise.resolve()
+        .then(() =&gt; console.log(5))
+        .then(() =&gt; console.log(6))
+        .then(() =&gt; console.log(7))
+}
+
+async function test () {
+    console.log(1);
+    await func();
+    console.log(3);
+}
+
+test();
+console.log(4);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><blockquote><p>步骤拆分 👇：</p> <ul><li><p>方式一：</p></li> <li><ul><li>同步代码输出<code>1、2</code>，接着将<code>log(5)</code>处的<code>then1</code>加入微任务队列，<code>await</code>拿到确切的<code>func</code>函数返回值<code>undefined</code>，将后续代码放入微任务队列（<code>then2</code>，可以这样理解）</li> <li>执行同步代码输出<code>4</code>，到此，所有同步代码完毕</li> <li>执行第一个放入的微任务<code>then1</code>输出<code>5</code>，产生<code>log(6)</code>的微任务<code>then3</code></li> <li>执行第二个放入的微任务<code>then2</code>输出<code>3</code></li> <li>然后执行微任务<code>then3</code>，输出<code>6</code>，产生<code>log(7)</code>的微任务<code>then4</code></li> <li>执行<code>then4</code>，输出<code>7</code></li></ul></li> <li><p>方式二：</p></li> <li><ul><li>同步代码输出<code>1、2</code>，<code>await</code>拿到<code>func</code>函数返回值，但是并未获得<strong>具体的结果</strong>（由<code>Promise</code>本身机制决定），暂停执行当前<code>async</code>函数内的代码（跳出、让行）</li> <li>输出<code>4</code>，到此，所有同步代码完毕</li> <li><code>await</code>一直等到<code>Promise.resolve().then...</code>执行完成，再放行输出<code>3</code></li></ul></li></ul></blockquote> <p>方式二没太明白 ❓</p> <p>继续 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+    console.log(2);
+
+    return Promise.resolve()
+        .then(() =&gt; console.log(5))
+        .then(() =&gt; console.log(6))
+        .then(() =&gt; console.log(7))
+}
+
+async function test () {
+    console.log(1);
+    await func()
+    console.log(3);
+}
+
+test();
+console.log(4);
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+
+// 最终结果👉: 1 2 4    B 5 C 6 D 7 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><p>还是没懂？</p> <p>继续 👇</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function test () {
+    console.log(1);
+    await Promise.resolve()
+        .then(() =&gt; console.log(5))
+        .then(() =&gt; console.log(6))
+        .then(() =&gt; console.log(7))
+    console.log(3);
+}
+
+test();
+console.log(4);
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+
+// 最终结果👉: 1 4    B 5 C 6 D 7 3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><blockquote><p>Note:</p> <p>综上，<code>await</code>一定要等到右侧的表达式有<strong>确切的值</strong>才会放行，否则将一直等待（阻塞当前<code>async</code>函数内的后续代码），不服看看这个 👇</p> <ul><li><div class="language- line-numbers-mode"><pre class="language-text"><code>function func () {
+  return new Promise((resolve) =&gt; {
+      console.log('B')
+      // resolve() 故意一直保持pending
+  })
+}
+
+async function test () {
+  console.log(1);
+  await func()
+  console.log(3);
+}
+
+test();
+console.log(4);
+// 最终结果👉: 1 B 4 (永远不会打印3)
+
+
+// ---------------------或者写为👇-------------------
+async function test () {
+  console.log(1);
+  await new Promise((resolve) =&gt; {
+      console.log('B')
+      // resolve() 故意一直保持pending
+  })
+  console.log(3);
+}
+
+test();
+console.log(4);
+// 最终结果👉: 1 B 4 (永远不会打印3)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br></div></div></li></ul></blockquote> <p>🌰3：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>async function func () {
+    console.log(2);
+    return {
+        then (cb) {
+            cb()
+        }
+    }
+}
+
+async function test () {
+    console.log(1);
+    await func();
+    console.log(3);
+}
+
+test();
+console.log(4);
+
+new Promise((resolve) =&gt; {
+    console.log('B')
+    resolve()
+}).then(() =&gt; {
+    console.log('C')
+}).then(() =&gt; {
+    console.log('D')
+})
+
+// 最终结果👉: 1 2 4 B C 3 D
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><blockquote><p>步骤拆分 👇：</p> <ul><li>同步代码输出<code>1、2</code></li> <li><code>await</code>拿到<code>func</code>函数的具体返回值<code>thenable</code>，将当前<code>async</code>函数内的后续代码放入微任务<code>then1</code>(但是需要等待一个<code>then</code>时间)</li> <li>同步代码输出<code>4、B</code>，产生<code>log(C)</code>的微任务<code>then2</code></li> <li>由于<code>then1</code>滞后一个<code>then</code>时间，直接执行<code>then2</code>输出<code>C</code>，产生<code>log(D)</code>的微任务<code>then3</code></li> <li>执行原本滞后一个<code>then</code>时间的微任务<code>then1</code>，输出<code>3</code></li> <li>执行最后一个微任务<code>then3</code>输出<code>D</code></li></ul></blockquote> <h2 id="_4、总结"><a href="#_4、总结" class="header-anchor">#</a> 4、总结</h2> <hr> <blockquote><p><code>async</code>函数返回值</p> <ul><li><p>📑 结论：<code>async</code>函数在抛出返回值时，会根据返回值<strong>类型</strong>开启<strong>不同数目的微任务</strong></p></li> <li><ul><li>return 结果值：非<code>thenable</code>、非<code>promise</code>（不等待）</li> <li>return 结果值：<code>thenable</code>（等待 1 个<code>then</code>的时间）</li> <li>return 结果值：<code>promise</code>（等待 2 个<code>then</code>的时间）</li></ul></li></ul> <p><code>await</code>右值类型区别</p> <ul><li><p>接非 <code>thenable</code> 类型，会立即向微任务队列添加一个微任务<code>then</code>，<strong>但不需等待</strong></p></li> <li><p>接 <code>thenable</code> 类型，需要<strong>等待一个 <code>then</code> 的时间之后</strong>执行</p></li> <li><p>接<code>Promise</code>类型(有确定的返回值)，会立即向微任务队列添加一个微任务<code>then</code>，<strong>但不需等待</strong></p></li> <li><ul><li>TC 39 对<code>await</code> 后面是 <code>promise</code> 的情况如何处理进行了一次修改，<strong>移除</strong>了额外的两个微任务，在<strong>早期版本</strong>，依然会等待两个 <code>then</code> 的时间</li></ul></li></ul></blockquote> <h3 id="参考资料"><a href="#参考资料" class="header-anchor">#</a> 参考资料</h3> <hr> <p>[1]https://juejin.cn/post/6844903715342647310#heading-3: <em>https://juejin.cn/post/6844903715342647310#heading-3</em></p></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/zh/Other/How to control Loading in Axios.html" class="prev">
+          如何在Axios中去控制 Loading？
+        </a></span> <span class="next"><a href="/zh/Other/Interviewer If there are 100 requests, how do you use Promise to control concurrency.html">
+          面试官：如果 100 个请求，你怎么用 Promise 去控制并发？
+        </a></span></p></div> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_0、前言" class="sidebar-link reco-side-_0、前言" data-v-b57cc07c>0、前言</a></li><li class="level-2" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_1、async-函数返回值" class="sidebar-link reco-side-_1、async-函数返回值" data-v-b57cc07c>1、async 函数返回值</a></li><li class="level-2" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2、await-右值类型区别" class="sidebar-link reco-side-_2、await-右值类型区别" data-v-b57cc07c>2、await 右值类型区别</a></li><li class="level-3" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-1、非-thenable" class="sidebar-link reco-side-_2-1、非-thenable" data-v-b57cc07c>2.1、非 thenable</a></li><li class="level-3" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-2、thenable类型" class="sidebar-link reco-side-_2-2、thenable类型" data-v-b57cc07c>2.2、thenable类型</a></li><li class="level-3" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_2-3、promise类型" class="sidebar-link reco-side-_2-3、promise类型" data-v-b57cc07c>2.3、Promise类型</a></li><li class="level-2" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_3、🌰" class="sidebar-link reco-side-_3、🌰" data-v-b57cc07c>3、🌰</a></li><li class="level-2" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#_4、总结" class="sidebar-link reco-side-_4、总结" data-v-b57cc07c>4、总结</a></li><li class="level-3" data-v-b57cc07c><a href="/zh/Other/The%20details%20of%20async%20and%20await%20devils%20that%20you%20don't%20know.html#参考资料" class="sidebar-link reco-side-参考资料" data-v-b57cc07c>参考资料</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas><canvas id="Ribbon"></canvas><div class="RibbonAnimation"></div><!----></div></div>
+    <script src="/assets/js/app.e7055c1c.js" defer></script><script src="/assets/js/3.23e16304.js" defer></script><script src="/assets/js/1.f8e854d9.js" defer></script><script src="/assets/js/121.a0a7fd51.js" defer></script><script src="/assets/js/28.d80ff939.js" defer></script>
+  </body>
+</html>
