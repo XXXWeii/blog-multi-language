@@ -16,8 +16,8 @@ features:
 heroImage: /logo.jpg
 heroImageStyle:
   {
-    width:"250px",
-    height:"200px",
+    width: "250px",
+    height: "200px",
     width: "100%",
     display: block,
     margin: "9rem auto 2rem",
