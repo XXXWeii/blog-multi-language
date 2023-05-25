@@ -16,11 +16,11 @@ features:
 heroImage: /logo.jpg
 heroImageStyle:
   {
-    width: "250px",
-    height: "200px",
-    width: "100%",
-    display: block,
-    margin: "9rem auto 2rem",
+    width:"250px",
+    height:"200px",
+    width:"100%",
+    display:block,
+    margin:"9rem auto 2rem",
     background:"#fff",
     borderRadius:"50%",
     -webkit-border-radius:"50%",
