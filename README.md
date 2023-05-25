@@ -13,7 +13,7 @@ features:
     details: Record the notes of the framework you have learned and some knowledge and tutorials commonly used in development, so that you can review it yourself.
   - title: About Me
     details: My name is XXXWeii, and I mainly use it for my own study and record the problems and solutions encountered in the study.
-heroImage: /logo.jpg
+heroImage:/logo.jpg
 heroImageStyle:{
     width:"250px",
     height:"200px",
