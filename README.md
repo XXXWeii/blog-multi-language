@@ -1,18 +1,18 @@
 ---
-home: true
-lang: "en-US"
-heroText: Normal No More!
-tagline: Welcome to zjw's Blog
+home:true
+lang:"en-US"
+heroText:Normal No More!
+tagline:Welcome to zjw's Blog
 # tagline: Welcome to zjw's friends circle
-actionText: Fast Access →
-actionLink: /guide/
+actionText:Fast Access →
+actionLink:/guide/
 features:
-  - title: non-stop questions
-    details: It is mainly to record the gains and feelings of some knowledge that I usually learn.
-  - title: Study Notes
-    details: Record the notes of the framework you have learned and some knowledge and tutorials commonly used in development, so that you can review it yourself.
-  - title: About Me
-    details: My name is XXXWeii, and I mainly use it for my own study and record the problems and solutions encountered in the study.
+  - title:non-stop questions
+    details:It is mainly to record the gains and feelings of some knowledge that I usually learn.
+  - title:Study Notes
+    details:Record the notes of the framework you have learned and some knowledge and tutorials commonly used in development, so that you can review it yourself.
+  - title:About Me
+    details:My name is XXXWeii, and I mainly use it for my own study and record the problems and solutions encountered in the study.
 heroImage:/logo.jpg
 heroImageStyle:{
     width:"250px",
