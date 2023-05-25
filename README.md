@@ -14,8 +14,7 @@ features:
   - title: About Me
     details: My name is XXXWeii, and I mainly use it for my own study and record the problems and solutions encountered in the study.
 heroImage: /logo.jpg
-heroImageStyle:
-  {
+heroImageStyle:{
     width:"250px",
     height:"200px",
     width:"100%",
@@ -24,8 +23,7 @@ heroImageStyle:
     background:"#fff",
     borderRadius:"50%",
     -webkit-border-radius:"50%",
-    -moz-border-radius:"50%",
-  }
+    -moz-border-radius:"50%",}
 # bgImage: /tiyugongyuan.jpg
 bgImageStyle: { height: "1000px" }
 isShowTitleInHome: false
