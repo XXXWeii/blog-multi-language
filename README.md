@@ -22,7 +22,7 @@ heroImageStyle:
     display: block,
     margin: "9rem auto 2rem",
     background: "#fff",
-    borderRadius: "50%",
+    borderRadius:"50%",
     -webkit-border-radius:"50%",
     -moz-border-radius:"50%",
   }
