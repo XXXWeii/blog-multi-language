@@ -21,7 +21,7 @@ heroImageStyle:
     width: "100%",
     display: block,
     margin: "9rem auto 2rem",
-    background: "#fff",
+    background:"#fff",
     borderRadius:"50%",
     -webkit-border-radius:"50%",
     -moz-border-radius:"50%",
